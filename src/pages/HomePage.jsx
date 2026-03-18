@@ -73,6 +73,12 @@ const HomePage = () => {
 
   return (
     <Layout>
+      {/* Watermark */}
+<div className="fixed right-2 top-1/2 -translate-y-1/2 rotate-90 origin-right z-50 pointer-events-none">
+  <span className="text-xs sm:text-sm text-gray-400 opacity-60 tracking-wider">
+    Built by Rajat Singh
+  </span>
+</div>
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-primary-900 via-primary-800 to-teal-800 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-10">

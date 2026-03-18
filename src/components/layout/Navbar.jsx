@@ -47,7 +47,8 @@ const Navbar = () => {
             </div>
             <div>
               <span className="font-display font-bold text-slate-900 text-lg leading-none">PathLab</span>
-              <span className="block text-[10px] text-slate-400 font-medium leading-none tracking-wide uppercase">Diagnostics</span>
+              <span className="block text-[10px] text-slate-400 font-medium leading-none tracking-wide uppercase">Diagnostics              <span className="font-display font-bold text-slate-900 text-lg leading-none">By Rajat Singh</span>
+</span>
             </div>
           </Link>
 

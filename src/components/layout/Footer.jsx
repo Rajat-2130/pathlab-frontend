@@ -54,23 +54,45 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm text-slate-400">
                 <MapPin size={14} className="mt-0.5 shrink-0 text-teal-400" />
-                123 Medical Plaza, Health City, India - 110001
+                Rajat Singh - Greater Noida 
               </li>
               <li className="flex items-center gap-2.5 text-sm text-slate-400">
                 <Phone size={14} className="shrink-0 text-teal-400" />
-                +91 98765 43210
+                +91 7905755634
               </li>
               <li className="flex items-center gap-2.5 text-sm text-slate-400">
                 <Mail size={14} className="shrink-0 text-teal-400" />
-                support@pathlab.com
+                rajat.tarun2003@gmail.com
               </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-slate-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <p className="text-xs text-slate-500">© {new Date().getFullYear()} PathLab Diagnostics. All rights reserved.</p>
-          <p className="text-xs text-slate-500">Built with ❤️ for better healthcare</p>
+         <div className="border-t border-slate-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+  <p className="text-xs text-slate-500">
+    Rajat Singh -----<a 
+    href="https://www.linkedin.com/in/rajatsingh2130/" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="text-teal-400 font-medium ml-1 hover:underline"
+  >
+     LINKEDIN
+  </a> 
+  </p>
+
+  <p className="text-xs text-slate-500 text-center">
+  Built with ❤️ by 
+  <a 
+    href="https://github.com/Rajat-2130/" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="text-teal-400 font-medium ml-1 hover:underline"
+  >
+    Rajat Singh
+  </a>
+</p>
+</div>
         </div>
       </div>
     </footer>
