@@ -20,24 +20,28 @@ const RegisterPage = () => {
   const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }))
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (form.password !== form.confirmPassword) {
-      toast.error('Passwords do not match')
-      return
-    }
-    setLoading(true)
-    try {
-      const { confirmPassword, ...payload } = form
-      const { data } = await registerUser(payload)
-      setUser(data.user)
-      toast.success('Account created successfully!')
-      navigate('/dashboard', { replace: true })
-    } catch (err) {
-      toast.error(getErrorMessage(err))
-    } finally {
-      setLoading(false)
-    }
+  e.preventDefault()
+  if (form.password !== form.confirmPassword) {
+    toast.error('Passwords do not match')
+    return
   }
+  setLoading(true)
+  try {
+    const { confirmPassword, ...payload } = form
+    const { data } = await registerUser(payload)
+    // Save token to localStorage
+    if (data.token) {
+      localStorage.setItem('token', data.token)
+    }
+    setUser(data.user)
+    toast.success('Account created successfully!')
+    navigate('/dashboard', { replace: true })
+  } catch (err) {
+    toast.error(getErrorMessage(err))
+  } finally {
+    setLoading(false)
+  }
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-primary-50/30 to-teal-50/20 flex items-center justify-center p-4 py-8">

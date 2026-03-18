@@ -8,12 +8,21 @@ const API = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
-// Response interceptor - handle auth errors globally
+// Attach token from localStorage to every request
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
+
+// Response interceptor
 API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Clear any cached state if needed
+      localStorage.removeItem('token')
       window.dispatchEvent(new CustomEvent('auth:unauthorized'))
     }
     return Promise.reject(error)
@@ -41,7 +50,8 @@ export const createBooking = (data) => API.post('/bookings', data)
 export const fetchMyBookings = (params) => API.get('/bookings/my', { params })
 export const fetchAllBookings = (params) => API.get('/bookings', { params })
 export const fetchBooking = (id) => API.get(`/bookings/${id}`)
-export const updateBookingStatus = (id, status) => API.put(`/bookings/${id}/status`, { status })
+export const updateBookingStatus = (id, status) =>
+  API.put(`/bookings/${id}/status`, { status })
 export const cancelBooking = (id) => API.put(`/bookings/${id}/cancel`)
 export const fetchBookingStats = () => API.get('/bookings/stats')
 
@@ -58,7 +68,8 @@ export const deleteReport = (bookingId) => API.delete(`/reports/${bookingId}`)
 // ─── Users (Admin) ───────────────────────────────────────
 export const fetchUsers = (params) => API.get('/users', { params })
 export const fetchUser = (id) => API.get(`/users/${id}`)
-export const updateUserRole = (id, role) => API.put(`/users/${id}/role`, { role })
+export const updateUserRole = (id, role) =>
+  API.put(`/users/${id}/role`, { role })
 export const deleteUser = (id) => API.delete(`/users/${id}`)
 export const fetchDashboardStats = () => API.get('/users/dashboard-stats')
 

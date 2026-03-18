@@ -9,11 +9,17 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   const fetchUser = useCallback(async () => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      setLoading(false)
+      return
+    }
     try {
       const { data } = await getMe()
       setUser(data.user)
     } catch {
       setUser(null)
+      localStorage.removeItem('token')
     } finally {
       setLoading(false)
     }
@@ -24,18 +30,22 @@ export const AuthProvider = ({ children }) => {
 
     const handleUnauthorized = () => {
       setUser(null)
+      localStorage.removeItem('token')
     }
     window.addEventListener('auth:unauthorized', handleUnauthorized)
-    return () => window.removeEventListener('auth:unauthorized', handleUnauthorized)
+    return () =>
+      window.removeEventListener('auth:unauthorized', handleUnauthorized)
   }, [fetchUser])
 
   const logout = async () => {
     try {
       await logoutUser()
-      setUser(null)
-      toast.success('Logged out successfully')
     } catch {
+      // ignore
+    } finally {
       setUser(null)
+      localStorage.removeItem('token')
+      toast.success('Logged out successfully')
     }
   }
 
@@ -43,7 +53,9 @@ export const AuthProvider = ({ children }) => {
   const isPatient = user?.role === 'patient'
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, logout, isAdmin, isPatient, refetchUser: fetchUser }}>
+    <AuthContext.Provider
+      value={{ user, setUser, loading, logout, isAdmin, isPatient, refetchUser: fetchUser }}
+    >
       {children}
     </AuthContext.Provider>
   )

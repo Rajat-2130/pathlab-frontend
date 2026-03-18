@@ -19,20 +19,26 @@ const LoginPage = () => {
   const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }))
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      const { data } = await loginUser(form)
-      setUser(data.user)
-      toast.success(`Welcome back, ${data.user.name.split(' ')[0]}!`)
-      if (from) return navigate(from, { replace: true })
-      navigate(data.user.role === 'admin' ? '/admin' : '/dashboard', { replace: true })
-    } catch (err) {
-      toast.error(getErrorMessage(err))
-    } finally {
-      setLoading(false)
+  e.preventDefault()
+  setLoading(true)
+  try {
+    const { data } = await loginUser(form)
+    // Save token to localStorage
+    if (data.token) {
+      localStorage.setItem('token', data.token)
     }
+    setUser(data.user)
+    toast.success(`Welcome back, ${data.user.name.split(' ')[0]}!`)
+    if (from) return navigate(from, { replace: true })
+    navigate(data.user.role === 'admin' ? '/admin' : '/dashboard', {
+      replace: true,
+    })
+  } catch (err) {
+    toast.error(getErrorMessage(err))
+  } finally {
+    setLoading(false)
   }
+}
 
   
 
